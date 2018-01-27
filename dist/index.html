@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>SPA</title>
+</head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 inline">
+                    <br>
+                    <h3>Simple SPA</h3>
+                    <input class="form-control" type="text" id="texto" style="display: inline; vertical-align: middle; width: 70%;">
+                    <button id="botao" class="btn btn-primary"><i class="fa fa-check"></i>  Enviar</button>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="list-group" id="lista">
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.17.1/axios.min.js"></script>
+        <script>
+            window.onload = () => {
+                const lista = document.querySelector('#lista');
+                const botao = document.querySelector('#botao');
+                const texto = document.querySelector('#texto');
+
+                botao.addEventListener('click', create);
+              read();
+            };
+
+            function templateLi(id,name) {
+                return `
+                <li data-id="${id}" class="list-group-item">${name}</li>
+                `;
+            }
+
+            function read() {
+                lista.innerHTML = '';
+                axios.get('/read')
+                    .then( (response) => {
+                        response.data.forEach(element => {
+                           lista.innerHTML += templateLi(element.id,element.name)
+                        });
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            }
+
+            function create() {
+                const name = texto.value;
+                axios.post('/create', {name})
+                    .then( (response) => {
+                        lista.innerHTML += templateLi(response.data[0], name)
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
+            }
+
+            function edit() {
+
+            }
+
+            function del() {
+
+            }
+
+        </script>
+    </body>
+</html>
