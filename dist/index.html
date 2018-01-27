@@ -13,7 +13,7 @@
                     <br>
                     <h3>Simple SPA</h3>
                     <input class="form-control" type="text" id="texto" style="display: inline; vertical-align: middle; width: 70%;">
-                    <button id="botao" class="btn btn-primary"><i class="fa fa-check"></i>  Enviar</button>
+                    <button id="botao" class="btn btn-success"><i class="fa fa-check"></i>  Enviar</button>
                 </div>
             </div>
             <br>
@@ -33,12 +33,19 @@
                 const texto = document.querySelector('#texto');
 
                 botao.addEventListener('click', create);
+                lista.addEventListener('click', del);
+                lista.addEventListener('click', edit);
               read();
             };
 
-            function templateLi(id,name) {
+            function templateLi(id,name,element = true) {
                 return `
-                <li data-id="${id}" class="list-group-item">${name}</li>
+                ${element ? `<li class="list-group-item">` : '' }
+                  ${name}
+                    <i class="fa fa-trash btn btn-danger delete pull-right" data-id="${id}"></i>
+                    <i class="fa fa-edit btn btn-primary update pull-right" data-id="${id}"></i>
+
+                   ${element ? `</li>` : ''}
                 `;
             }
 
@@ -66,12 +73,51 @@
                     });
             }
 
-            function edit() {
+            function edit(element) {
+                if(element.target.classList.contains('update')){
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.setAttribute('value', '');
+                    const pai = element.target.parentElement;
+                    const id = element.target.dataset.id;
 
+                    pai.innerText = '';
+                    pai.appendChild(input);
+
+                    input.addEventListener('keydown', update.bind(pai, id, input));
+                    input.focus();
+
+                }
+            }
+            
+            function update(id,input) {
+                const tecla = event.key;
+                if(tecla == null || tecla != 'Enter') return;
+
+                axios.put(`/update/${id}`,{name: input.value})
+                    .then( (response) => {
+                        if(response.status = 200){
+                            this.innerHTML = templateLi(id,input.value,false);
+                        }
+                    })
+                    .catch( (error) => {
+                        console.log(error);
+                    });
             }
 
-            function del() {
-
+            function del(element) {
+                if(element.target.classList.contains('delete')){
+                    const id = element.target.dataset.id;
+                    axios.delete(`/delete/${id}`)
+                        .then( (response) => {
+                            if(response.status = 200){
+                                lista.removeChild(element.path[1]);
+                            }
+                        })
+                        .catch( (error) => {
+                            console.log(error);
+                        });
+                }
             }
 
         </script>
