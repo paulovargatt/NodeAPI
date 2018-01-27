@@ -1,0 +1,25 @@
+{
+  "name": "nodeapi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paulovargatt/NodeAPI.git"
+  },
+  "author": "Paulo Vargatt <pvargatt@gmail.com> (https://vargatt.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paulovargatt/NodeAPI/issues"
+  },
+  "homepage": "https://github.com/paulovargatt/NodeAPI#readme",
+  "dependencies": {
+    "knex": "^0.14.2",
+    "mysql": "^2.15.0",
+    "restify": "^6.3.4",
+    "restify-errors": "^5.0.0"
+  }
+}
