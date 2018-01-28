@@ -1,0 +1,33 @@
+html{
+    background: #e8eaf6 ;
+}
+
+.text-center{
+    text-align: center!important;
+}
+
+.title{
+    color: #043759;
+    font-weight: 600;
+    font-size: 2em!important;
+}
+
+.btn-add{
+    position: fixed;
+    right: 40px;
+    bottom: 25px;
+    z-index: 5;
+    background: #043759!important;
+}
+
+.spiner-position{
+    position: fixed;
+    right: 40px;
+    bottom: 95px;
+    z-index: 5;
+    display: none;
+}
+
+.active{
+    display: block!important;
+}
