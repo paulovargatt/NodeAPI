@@ -7,6 +7,7 @@ window.onload = () => {
 };
 
 var  grids = document.querySelector('.grids');
+var body = document.querySelector('body');
 
 function templateCard(address, image) {
     return `
